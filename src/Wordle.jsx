@@ -1,10 +1,7 @@
 import React from "react";
 
 import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import Stack from "react-bootstrap/Stack";
 
 import wordList from "./WordList.js";
 
@@ -23,7 +20,7 @@ class Wordle extends React.Component {
     let output = [];
     let i = 1;
     textChars.forEach((char) => {
-      output.push(<Button key={i++} variant="success">{char}</Button>);
+      output.push(<span key={i++} className="greenbox">{char}</span>);
     });
     return output;
   }
@@ -71,30 +68,16 @@ class Wordle extends React.Component {
     const dayOffset = offsetForDate(puzzleDate);
 
     return (
-      <Container>
-        <Row>
-          <Col>
-            <Card>
-              <Card.Body>
-                <Card.Title>Wordle {dayOffset}</Card.Title>
-                <Card.Text>
-                  {this.boxify(solution)}
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            {puzzleDate.toLocaleDateString("en-US")}
-          </Col>
-        </Row>
-        <Row>
-          <Col><Button variant="info" key="prev" onClick={this.setPrevious}>Previous</Button></Col>
-          <Col><Button variant="info" key="today" onClick={this.setToday}>Today</Button></Col>
-          <Col><Button variant="info" key="next" onClick={this.setNext}>Next</Button></Col>
-        </Row>
-      </Container>
+      <Stack fluid direction='vertical'>
+        <p>Wordle {dayOffset}</p>
+        <div>{this.boxify(solution)}</div>
+        <p>{puzzleDate.toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
+        <div>
+          <Button variant="info" key="prev" className="buttons" onClick={this.setPrevious}>-</Button>
+          <Button variant="info" key="today" className="buttons" onClick={this.setToday}>Today</Button>
+          <Button variant="info" key="next" className="buttons" onClick={this.setNext}>+</Button>
+        </div>
+      </Stack>
     );
   }
 }
