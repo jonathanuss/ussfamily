@@ -3,7 +3,7 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
 
-import wordList from "./WordList.js";
+import {wordList, oldWordList} from "./WordList.js";
 
 class Wordle extends React.Component {
   constructor(props) {
@@ -54,23 +54,25 @@ class Wordle extends React.Component {
         offsetDate.setHours(0, 0, 0, 0);
       return Math.round(timeDifference / 864e5);
     }
-    function getSolution(day) {
+    function getSolution(day, list) {
       const rawIndex = offsetForDate(day);
-      const index = rawIndex % wordList.length;
-      return wordList[index];
+      const index = rawIndex % list.length;
+      return list[index];
     }
     function offsetForDate(offsetDate) {
       return getOffset(dateReference, offsetDate);
     }
 
     const puzzleDate = this.state.puzzleDate;
-    const solution = getSolution(puzzleDate);
+    const solution = getSolution(puzzleDate, wordList);
+    const oldSolution = getSolution(puzzleDate, oldWordList);
     const dayOffset = offsetForDate(puzzleDate);
 
     return (
       <Stack fluid direction='vertical'>
         <p>Wordle {dayOffset}</p>
-        <div>{this.boxify(solution)}</div>
+        <div>(NYT Version Solution): {this.boxify(solution)}</div>
+        <div className="diminished">(Original Wordle Solution): {oldSolution}</div>
         <p>{puzzleDate.toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
         <div>
           <Button variant="info" key="prev" className="buttons" onClick={this.setPrevious}>-</Button>
