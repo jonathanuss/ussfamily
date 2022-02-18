@@ -14,9 +14,22 @@ html {
 }
 
 .greenbox {
-  border: 1px solid green;
-  padding: 5px;
-  margin: 5px;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+  border: 1px solid #efefef;
+  padding: 0.5em;
+  margin: 0.1em;
   border-radius: 5px;
   background: green;
+}
+
+.diminished {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+  font-style: italic;
+  color: #a0a0a0;
+}
+
+.solution {
+  padding: 1em;
 }
